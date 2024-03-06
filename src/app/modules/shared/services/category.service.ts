@@ -40,4 +40,14 @@ export class CategoryService {
     return this.http.put(endpoint, body);
   }
 
+
+  /**
+   * actualizar categorias
+   */
+  deleteCategories(id: any){
+    const endpoint = `${base_url}/categories/ ${id}`;
+    return this.http.delete(endpoint);
+  }
+
+
 }

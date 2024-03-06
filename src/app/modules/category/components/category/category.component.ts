@@ -4,6 +4,7 @@ import { CategoryService } from 'src/app/modules/shared/services/category.servic
 import { NewCategoryComponent } from '../new-category/new-category.component';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar, MatSnackBarRef, SimpleSnackBar } from '@angular/material/snack-bar';
+import { ConfirmComponent } from 'src/app/modules/shared/components/confirm/confirm.component';
 
 @Component({
   selector: 'app-category',
@@ -71,6 +72,24 @@ export class CategoryComponent implements OnInit {
         this.categoryService.getCategories();
       } else if (result == 2){
         this.openSnackBar("Caregoria NO actualizada", "Fallida");
+      }
+      
+    });
+  }
+
+  delete(id: any){
+    const dialogRef = this.dialog.open(ConfirmComponent , {
+      width: '300px',
+      data: {id: id}
+    });
+
+    dialogRef.afterClosed().subscribe((result:any) => {
+
+      if(result == 1){
+        this.openSnackBar("Categoria Eliminada", "Exitosa");
+        this.categoryService.getCategories();
+      } else if (result == 2){
+        this.openSnackBar("Caregoria NO eliminada", "Fallida");
       }
       
     });
