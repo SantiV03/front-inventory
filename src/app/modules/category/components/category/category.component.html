@@ -15,7 +15,7 @@
         <div class="right">
             <ul>
                 <li>
-                    <button mat-raised-button color="primary">Agregar Categoría</button>
+                    <button mat-raised-button color="primary" (click)="openCategoryDialog()">Agregar Categoría</button>
                 </li>
             </ul>
         </div>
@@ -51,7 +51,7 @@
                 <th mat-header-cell *matHeaderCellDef>Acciones</th>
                 <td mat-cell *matCellDef="let element; let i=index;">
 
-                    <button mat-icon-button color="secundary">
+                    <button mat-icon-button color="primary">
                         <mat-icon aria-label="Editar">editar</mat-icon>
                     </button>
 
