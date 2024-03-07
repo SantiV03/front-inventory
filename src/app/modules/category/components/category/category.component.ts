@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { CategoryService } from 'src/app/modules/shared/services/category.service';
 import { NewCategoryComponent } from '../new-category/new-category.component';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar, MatSnackBarRef, SimpleSnackBar } from '@angular/material/snack-bar';
 import { ConfirmComponent } from 'src/app/modules/shared/components/confirm/confirm.component';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-category',
@@ -16,7 +17,7 @@ export class CategoryComponent implements OnInit {
   
 
   constructor(private categoryService: CategoryService,
-                 public dialog: MatDialog, private snackBar: MatSnackBar ) { }
+                 public dialog: MatDialog, private snackBar: MatSnackBar, ) { }
 
   ngOnInit(): void {
     this.categoryService.getCategories()
@@ -40,7 +41,9 @@ export class CategoryComponent implements OnInit {
         dataCategory.push(element);
         
       });
-      this.dataSource = new MatTableDataSource<CategoryElement>(dataCategory)
+      this.dataSource = new MatTableDataSource<CategoryElement>(dataCategory);
+      this.dataSource.paginator = this.paginator;
+
     }
    
   }
@@ -95,6 +98,34 @@ export class CategoryComponent implements OnInit {
     });
   }
 
+  buscar(termino: string): void {
+    
+    const terminoSinPorcentaje = termino.replace(/20/g, '');
+
+    console.log(terminoSinPorcentaje)
+
+    if (terminoSinPorcentaje.length === 0) {
+      this.categoryService.getCategories().subscribe(
+        (result: any) => {
+          this.processCategoriesResponse(result);
+        },
+        (error: any) => {
+          // Manejar errores si es necesario
+        }
+      );
+    } else {
+      this.categoryService.getCategoriesById(terminoSinPorcentaje).subscribe(
+        (result: any) => {
+          this.processCategoriesResponse(result);
+        },
+        (error: any) => {
+          // Manejar errores si es necesario
+        }
+      );
+  }
+
+}
+
   openSnackBar(massage: string, action: string) : MatSnackBarRef<SimpleSnackBar>{
     return this.snackBar.open(massage, action, {
       duration: 2000
@@ -104,6 +135,9 @@ export class CategoryComponent implements OnInit {
 
   displayedColumns: string[] = ['id', 'name', 'description', 'actions'];
   dataSource = new MatTableDataSource<CategoryElement>();
+
+  @ViewChild(MatPaginator)
+  paginator! : MatPaginator
 
 }
 
