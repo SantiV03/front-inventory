@@ -30,7 +30,6 @@ export class ProductService {
   }
 
 
-
   /**
    * Actualizar producto
    */
@@ -49,6 +48,7 @@ export class ProductService {
     return this.http.delete(endpoint)
   }
 
+
   /**
    * buscar producto por nombre
    */
@@ -57,6 +57,10 @@ export class ProductService {
     const endpoint =  `${base_url}/products/filter/${name}`
     return this.http.get(endpoint)
   }
+
+  }
+
+
 
   }
 
