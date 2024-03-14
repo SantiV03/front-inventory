@@ -22,7 +22,14 @@ export class CategoryService {
     return this.http.get(endpoint);
     
   }
-
+  /**
+   * buscar categorias por id
+   */
+  getCategoriesById(id: any){
+    const endpoint = `${base_url}/categories/${id}`;
+    return this.http.get(endpoint);
+  }
+  
   /**
    * guardar categorias
    */
@@ -36,7 +43,7 @@ export class CategoryService {
    * actualizar categorias
    */
   updateCategories(body: any, id: any){
-    const endpoint = `${base_url}/categories/ ${id}`;
+    const endpoint = `${base_url}/categories/${id}`;
     return this.http.put(endpoint, body);
   }
 
@@ -45,17 +52,11 @@ export class CategoryService {
    * actualizar categorias
    */
   deleteCategories(id: any){
-    const endpoint = `${base_url}/categories/ ${id}`;
+    const endpoint = `${base_url}/categories/${id}`;
     return this.http.delete(endpoint);
   }
 
-  /**
-   * buscar categorias por id
-   */
-  getCategoriesById(id: any){
-    const endpoint = `${base_url}/categories/ ${id}`;
-    return this.http.get(endpoint);
-  }
+
 
 
 }
