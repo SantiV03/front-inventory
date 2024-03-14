@@ -31,19 +31,20 @@ export class CategoryComponent implements OnInit {
     })
   }
   processCategoriesResponse(resp: any){
-
+    console.log("processCategoriesResponse :" + resp)
     const dataCategory: CategoryElement[] = [];
 
     if(resp.metadata[0].code == "00") {
       let listCategory = resp.categoryResponse.category;
-
+      
       listCategory.forEach((element: CategoryElement) => {
         dataCategory.push(element);
         
       });
+      console.log("processCategoriesResponse"+dataCategory.length);
       this.dataSource = new MatTableDataSource<CategoryElement>(dataCategory);
       this.dataSource.paginator = this.paginator;
-
+      
     }
    
   }
@@ -98,33 +99,63 @@ export class CategoryComponent implements OnInit {
     });
   }
 
-  buscar(termino: string): void {
-    
-    const terminoSinPorcentaje = termino.replace(/20/g, '');
 
-    console.log(terminoSinPorcentaje)
+  buscar(termino: string): void {
+
+    if (termino.length === 0) {
+        console.log("respuesta categories: 0" );
+        this.categoryService.getCategories()
+      .subscribe( (data:any) => {
+
+        console.log("respuesta categories: ", data);
+        this.processCategoriesResponse(data);
+
+      }, (error: any) => {
+        console.log("error: ", error);
+      })
+
+    } else {
+      
+        this.categoryService.getCategoriesById(termino)
+        .subscribe(   (data: any) => {
+          console.log("respuesta categories: ", data);
+                this.processCategoriesResponse(data);
+            },
+            (error: any) => {
+                console.log("Error al obtener las categorías por ID:", error);
+            });
+  }
+  }
+  buscarV2(termino: string): void {
+    const terminoSinPorcentaje = termino.replace(/%20/g, '');
 
     if (terminoSinPorcentaje.length === 0) {
-      this.categoryService.getCategories().subscribe(
-        (result: any) => {
-          this.processCategoriesResponse(result);
-        },
-        (error: any) => {
-          // Manejar errores si es necesario
-        }
-      );
+        console.log("respuesta categories: 0" );
+        this.categoryService.getCategories()
+            .subscribe({
+                next: (data: any) => {
+                    console.log("respuesta categories: ", data);
+                    this.processCategoriesResponse(data);
+                },
+                error: (error: any) => {
+                    console.log("error: ", error);
+                }
+            });
     } else {
-      this.categoryService.getCategoriesById(terminoSinPorcentaje).subscribe(
-        (result: any) => {
-          this.processCategoriesResponse(result);
-        },
-        (error: any) => {
-          // Manejar errores si es necesario
-        }
-      );
-  }
-
+        console.log("respuesta categories: != 0" );
+        this.categoryService.getCategoriesById(terminoSinPorcentaje)
+            .subscribe({
+                next: (data: any) => {
+                    console.log("respuesta categories: ", data);
+                    this.processCategoriesResponse(data);
+                },
+                error: (error: any) => {
+                    console.log("Error al obtener las categorías por ID:", error);
+                }
+            });
+    }
 }
+
 
   openSnackBar(massage: string, action: string) : MatSnackBarRef<SimpleSnackBar>{
     return this.snackBar.open(massage, action, {
@@ -140,11 +171,8 @@ export class CategoryComponent implements OnInit {
   paginator! : MatPaginator
 
 }
-
-
 export interface CategoryElement {
   description: string;
   id: number;
   name: string;
 }
-
