@@ -37,6 +37,12 @@ export class NewProductComponent implements OnInit {
         category: ['', Validators.required],
         picture: ['', Validators.required]
       })
+
+      if (data != null){
+        this.updateForm(data)
+        this.estadoFormulario = "Actualizar"
+      }
+
     }
 
   ngOnInit(): void {
@@ -60,9 +66,17 @@ export class NewProductComponent implements OnInit {
     uploadImageData.append('price', data.price)
     uploadImageData.append('account', data.account)
     uploadImageData.append('categoryId', data.category)
-    
 
-    this.productService.saveProduct(uploadImageData)
+    if (this.data != null){
+      //actualizar producto
+      this.productService.updateProduct(uploadImageData, this.data.id)
+                .subscribe((data: any)=>{
+                  this.dialogRef.close(1)
+                }, (error:any) => {  
+                  this.dialogRef.close(2)
+                })
+    } else{
+          this.productService.saveProduct(uploadImageData)
     .subscribe((data: any)=>{
       console.log("saveProduct 1")
       this.dialogRef.close(1)
@@ -70,7 +84,8 @@ export class NewProductComponent implements OnInit {
       console.log("saveProduct 2")
       this.dialogRef.close(2)
     })
-
+    }
+ 
   }
 
 
@@ -99,6 +114,16 @@ export class NewProductComponent implements OnInit {
 
   }
 
+  }
+  updateForm(data: any){
+
+    this.productForm = this.fb.group( {
+      name: [data.name , Validators.required],
+      price: [data.price, Validators.required],
+      account: [data.account, Validators.required],
+      category: [data.category.id, Validators.required],
+      picture: ['', Validators.required]
+    })
   }
 
 }
