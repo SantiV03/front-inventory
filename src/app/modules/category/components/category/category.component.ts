@@ -83,7 +83,7 @@ export class CategoryComponent implements OnInit {
   delete(id: any){
     const dialogRef = this.dialog.open(ConfirmComponent , {
       width: '300px',
-      data: {id: id}
+      data: {id: id, module: "category"}
     });
 
     dialogRef.afterClosed().subscribe((result:any) => {
