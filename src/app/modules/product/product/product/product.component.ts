@@ -112,6 +112,17 @@ export class ProductComponent implements OnInit {
     });
   }
 
+  Buscar(name:any){
+    if (name.length === 0){
+      return this.getProducts()
+    }
+
+    this.productService.getProductByName(name)
+    .subscribe((resp:any)=> {
+      this.proccesProductResponse(resp)
+    })
+  }
+
 }
 
 
