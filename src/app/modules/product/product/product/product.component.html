@@ -7,7 +7,11 @@
         <div>
             <mat-form-field hintLabel="" appearence="fill">
                 <mat-label>Buscar Productos</mat-label>
+
                 <input matInput #input (keyup)="Buscar(input.value)">
+
+                <input matInput #input (keyup)="buscar(inputvalue)" >
+
 
             </mat-form-field>
         </div>
