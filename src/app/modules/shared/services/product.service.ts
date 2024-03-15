@@ -48,16 +48,13 @@ export class ProductService {
     return this.http.delete(endpoint)
   }
 
-
   /**
    * buscar producto por nombre
    */
-  
-  getProductsByName(name:any){
+  getProductByName(name:any){
     const endpoint =  `${base_url}/products/filter/${name}`
     return this.http.get(endpoint)
   }
-
   }
 
 

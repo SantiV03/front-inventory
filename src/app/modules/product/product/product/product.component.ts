@@ -112,18 +112,16 @@ export class ProductComponent implements OnInit {
     });
   }
 
-
-  buscar(name:any): void{
-    if (name.length ===0){
+  Buscar(name:any){
+    if (name.length === 0){
       return this.getProducts()
     }
 
-    this.productService.getProductsByName(name)
-      .subscribe((resp:any)=>{
-        this.proccesProductResponse(resp)
-      })
+    this.productService.getProductByName(name)
+    .subscribe((resp:any)=> {
+      this.proccesProductResponse(resp)
+    })
   }
-
 
 }
 
