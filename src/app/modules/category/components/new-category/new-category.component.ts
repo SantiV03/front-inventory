@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { CategoryComponent } from '../category/category.component';
 import { CategoryService } from 'src/app/modules/shared/services/category.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
@@ -12,10 +12,10 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 })
 export class NewCategoryComponent implements OnInit {
 
-  categoryForm: FormGroup;  
+  categoryForm: UntypedFormGroup;  
   estadoFormulario: string = "" ;
 
-  constructor(private fb: FormBuilder, private categoryservices: CategoryService, 
+  constructor(private fb: UntypedFormBuilder, private categoryservices: CategoryService, 
     private dialogRef: MatDialogRef<CategoryComponent>, 
     @Inject(MAT_DIALOG_DATA) public data: any)  { 
 

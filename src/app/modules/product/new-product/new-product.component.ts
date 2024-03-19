@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { CategoryService } from '../../shared/services/category.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ProductElement } from '../product/product/product.component';
@@ -18,13 +18,13 @@ export interface Category{
 })
 export class NewProductComponent implements OnInit {
 
-  public productForm: FormGroup
+  public productForm: UntypedFormGroup
   estadoFormulario: string = ""
   categories: Category[]=[]
   selectedFiles: any;
   nameImg: String =""
 
-  constructor(private fb: FormBuilder, private categoryservices: CategoryService, 
+  constructor(private fb: UntypedFormBuilder, private categoryservices: CategoryService, 
     private productService: ProductService, 
     private dialogRef: MatDialogRef<NewProductComponent>, 
     @Inject(MAT_DIALOG_DATA) public data: any)  {
