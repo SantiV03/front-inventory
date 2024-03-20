@@ -3,7 +3,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar, MatSnackBarRef, SimpleSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
-import { subscribeOn } from 'rxjs';
 import { ProductService } from 'src/app/modules/shared/services/product.service';
 import { NewProductComponent } from '../../new-product/new-product.component';
 import { ConfirmComponent } from 'src/app/modules/shared/components/confirm/confirm.component';
@@ -16,115 +15,111 @@ import { ConfirmComponent } from 'src/app/modules/shared/components/confirm/conf
 export class ProductComponent implements OnInit {
 
   constructor(private productService: ProductService,
-    public dialog: MatDialog, private snackBar: MatSnackBar,) { }
+              public dialog: MatDialog,
+              private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
-    this.getProducts()
+    this.getProducts();
   }
 
   displayedColumns: string[] = ['id', 'name', 'price', 'account', 'category', 'picture', 'actions'];
   dataSource = new MatTableDataSource<ProductElement>();
 
   @ViewChild(MatPaginator)
-  paginator! : MatPaginator
+  paginator!: MatPaginator;
 
-  getProducts(){
+  getProducts(): void {
     this.productService.getProducts()
-    .subscribe((data:any)=> {
-      console.log("respuesta de productos", data)
-      this.proccesProductResponse(data)
-    }, (error: any) => {
-      console.log("error en productos", error)
-    })
-    
+      .subscribe((data: any) => {
+        console.log("respuesta de productos", data);
+        this.processProductResponse(data);
+      }, (error: any) => {
+        console.log("error en productos", error);
+      });
   }
-  
 
-  proccesProductResponse(resp: any) {
+  processProductResponse(resp: any): void {
     const dateProduct: ProductElement[] = [];
     if (resp.metadata[0].code == "00") {
       let listCProduct = resp.product.products;
-  
+
       listCProduct.forEach((element: ProductElement) => {
         element.picture = 'data:image/jpeg;base64,' + element.picture;
         dateProduct.push(element);
       });
-  
+
       this.dataSource = new MatTableDataSource<ProductElement>(dateProduct);
       this.dataSource.paginator = this.paginator;
     }
   }
 
-  openProductDialog(){
-    const dialogRef = this.dialog.open(NewProductComponent  , {
+  openProductDialog(): void {
+    const dialogRef = this.dialog.open(NewProductComponent, {
       width: '450px'
     });
 
-    dialogRef.afterClosed().subscribe((result:any) => {
-      if(result == 1){
+    dialogRef.afterClosed().subscribe((result: any) => {
+      if (result == 1) {
         this.openSnackBar("Producto Agregado", "Exitosa");
-        this.productService.getProducts();
-      } else if (result == 2){
+        this.getProducts();
+      } else if (result == 2) {
         this.openSnackBar("Producto NO guardado", "Fallida");
       }
-      
+
     });
   }
 
-  openSnackBar(massage: string, action: string) : MatSnackBarRef<SimpleSnackBar>{
+  openSnackBar(massage: string, action: string): MatSnackBarRef<SimpleSnackBar> {
     return this.snackBar.open(massage, action, {
       duration: 2000
-    })
-
+    });
   }
 
-  edit(id: number, name: string, price: number, account: number, category: any){
-    const dialogRef = this.dialog.open(NewProductComponent  , {
+  edit(id: number, name: string, price: number, account: number, category: any): void {
+    const dialogRef = this.dialog.open(NewProductComponent, {
       width: '450px',
-      data: {id: id, name: name, price: price, account: account, category: category}
+      data: { id: id, name: name, price: price, account: account, category: category }
     });
 
-    dialogRef.afterClosed().subscribe((result:any) => {
-      if(result == 1){
+    dialogRef.afterClosed().subscribe((result: any) => {
+      if (result == 1) {
         this.openSnackBar("Producto editado", "Exitosa");
-        this.productService.getProducts();
-      } else if (result == 2){
+        this.getProducts();
+      } else if (result == 2) {
         this.openSnackBar("Producto NO editado", "Error");
       }
-      
+
     });
   }
 
-  delete(id:any){
-    const dialogRef = this.dialog.open(ConfirmComponent  , {
+  delete(id: any): void {
+    const dialogRef = this.dialog.open(ConfirmComponent, {
       width: '450px',
-      data: {id: id, module: "product"}
+      data: { id: id, module: "product" }
     });
 
-    dialogRef.afterClosed().subscribe((result:any) => {
-      if(result == 1){
+    dialogRef.afterClosed().subscribe((result: any) => {
+      if (result == 1) {
         this.openSnackBar("Producto eliminado", "Exitosa");
-        this.productService.getProducts();
-      } else if (result == 2){
-        this.openSnackBar("Producto NO elimidano", "Error");
+        this.getProducts();
+      } else if (result == 2) {
+        this.openSnackBar("Producto NO eliminado", "Error");
       }
-      
+
     });
   }
 
-  Buscar(name:any){
-    if (name.length === 0){
-      return this.getProducts()
+  buscar(name: any): void {
+    if (name.length === 0) {
+      return this.getProducts();
     }
 
     this.productService.getProductByName(name)
-    .subscribe((resp:any)=> {
-      this.proccesProductResponse(resp)
-    })
+      .subscribe((resp: any) => {
+        this.processProductResponse(resp);
+      });
   }
-
 }
-
 
 
 export interface ProductElement {
@@ -136,5 +131,3 @@ export interface ProductElement {
   picture: any
  
 }
-
-

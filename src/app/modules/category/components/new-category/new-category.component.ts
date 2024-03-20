@@ -4,7 +4,6 @@ import { CategoryComponent } from '../category/category.component';
 import { CategoryService } from 'src/app/modules/shared/services/category.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
-
 @Component({
   selector: 'app-new-category',
   templateUrl: './new-category.component.html',
@@ -84,6 +83,4 @@ export class NewCategoryComponent implements OnInit {
       description: [data.description , Validators.required]
     });
   }
-
-
 }
