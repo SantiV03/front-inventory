@@ -6,7 +6,6 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ProductService } from 'src/app/modules/shared/services/product.service';
 import { NewProductComponent } from '../../new-product/new-product.component';
 import { ConfirmComponent } from 'src/app/modules/shared/components/confirm/confirm.component';
-import { ProductElement } from './product/product.component';
 
 @Component({
   selector: 'app-product',
@@ -123,3 +122,12 @@ export class ProductComponent implements OnInit {
 }
 
 
+export interface ProductElement {
+  id: number
+  name: string
+  price: number
+  account: number
+  category: any
+  picture: any
+ 
+}
