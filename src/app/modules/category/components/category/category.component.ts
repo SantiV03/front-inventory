@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar, MatSnackBarRef, SimpleSnackBar } from '@angular/material/snack-bar';
 import { ConfirmComponent } from 'src/app/modules/shared/components/confirm/confirm.component';
 import { MatPaginator } from '@angular/material/paginator';
+import { UtilService } from 'src/app/modules/shared/services/util.service';
 
 @Component({
   selector: 'app-category',
@@ -14,10 +15,14 @@ import { MatPaginator } from '@angular/material/paginator';
 })
 export class CategoryComponent implements OnInit {
 
+  isAdmin: any
+
   constructor(private categoryService: CategoryService,
-              public dialog: MatDialog, private snackBar: MatSnackBar) { }
+              public dialog: MatDialog, private snackBar: MatSnackBar,
+              private util: UtilService) { }
 
   ngOnInit(): void {
+    this.isAdmin = this.util.isAdmin()
     this.categoryService.getCategories()
       .subscribe({
         next: (data: any) => {
@@ -27,7 +32,9 @@ export class CategoryComponent implements OnInit {
         error: (error: any) => {
           console.log("error: ", error);
         }
+        
       });
+      
   }
 
   processCategoriesResponse(resp: any): void {

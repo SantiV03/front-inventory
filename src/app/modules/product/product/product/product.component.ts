@@ -6,6 +6,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ProductService } from 'src/app/modules/shared/services/product.service';
 import { NewProductComponent } from '../../new-product/new-product.component';
 import { ConfirmComponent } from 'src/app/modules/shared/components/confirm/confirm.component';
+import { UtilService } from 'src/app/modules/shared/services/util.service';
 
 @Component({
   selector: 'app-product',
@@ -13,12 +14,16 @@ import { ConfirmComponent } from 'src/app/modules/shared/components/confirm/conf
   styleUrls: ['./product.component.css']
 })
 export class ProductComponent implements OnInit {
+ 
+  isAdmin: any
 
   constructor(private productService: ProductService,
               public dialog: MatDialog,
-              private snackBar: MatSnackBar) { }
+              private snackBar: MatSnackBar,
+              private util: UtilService) { }
 
   ngOnInit(): void {
+    this.isAdmin = this.util.isAdmin()
     this.getProducts();
   }
 

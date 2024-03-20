@@ -7,23 +7,25 @@
         <h1 class="app-name">S-inventory</h1>
 
         <div class="right">
-            <ul>
-                <li>
-                    <button mat-icon-button>
-                        <mat-icon>help_outline</mat-icon>
-                    </button>
-                </li>
-                <li>
-                    <button mat-button [matMenuTriggerFor]="menu">
-                        <mat-icon>person_outline</mat-icon>
-                    </button>
-                    <mat-menu #menu="matMenu">
-                        <mat-icon>exit_to_app</mat-icon>
-                        Cerrar Sesión
-                    </mat-menu>
-                </li>
-            </ul>
-        </div>
+    <ul>
+        <li>
+            <button mat-icon-button>
+                <mat-icon>help_outline</mat-icon>
+            </button>
+        </li>
+        <li>
+            <button mat-button [matMenuTriggerFor]="menu">
+                <mat-icon>person_outline</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+                <button mat-menu-item (click)="logout()">        
+                    <mat-icon>exit_to_app</mat-icon>
+                    Cerrar Sesión
+                </button>
+            </mat-menu>
+        </li>
+    </ul>
+</div>
 
     </mat-toolbar>
 
@@ -37,8 +39,8 @@
                     <!--Profile-->
                     <div class="profile-card">
                         <div class="header">
-                            <h2>Santiago Mañas</h2>
-                            <h4>santiago&#64;gmail.com</h4>
+                            <h2>{{ username }}</h2>
+                            <h4></h4>
                         </div>
                     </div>
 
