@@ -7,6 +7,8 @@ import { HomeComponent } from './modules/dashboard/components/home/home.componen
 import { DashboardModule } from './modules/dashboard/dashboard.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
+//import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
+
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
@@ -36,7 +38,8 @@ function initializeKeycloak(keycloak: KeycloakService) {
     AppRoutingModule,
     DashboardModule,
     BrowserAnimationsModule,
-    KeycloakAngularModule
+    KeycloakAngularModule,
+    
   ],
   providers: [
     {
