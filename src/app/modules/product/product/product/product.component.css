@@ -1,11 +1,15 @@
 table {
     width: 100%;
 }
-
+ul {
+    display: flex;
+}
 
 ul li {
     list-style: none;
+    margin-right: 5px;
 }
+
 
 .alinear {
     text-align: center;

@@ -8,6 +8,7 @@ import { ConfirmComponent } from 'src/app/modules/shared/components/confirm/conf
 import { MatPaginator } from '@angular/material/paginator';
 import { UtilService } from 'src/app/modules/shared/services/util.service';
 
+
 @Component({
   selector: 'app-category',
   templateUrl: './category.component.html',
@@ -128,11 +129,28 @@ export class CategoryComponent implements OnInit {
         });
     }
   }
+  exportExcel(){
+      this.categoryService.exportCategories()
+      .subscribe((data:any)=> {
+        let file = new Blob([data], {type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'})
+        let fileUrl = URL.createObjectURL(file)
+        var anchor = document.createElement("a")
+        anchor.download = "categories.xlsx"
+        anchor.href = fileUrl
+        anchor.click()
+
+        this.openSnackBar("Archivo exportado", "Exitosa");
+      }, (error: any)=>{
+        this.openSnackBar("Archivo NO exportado", "Fallido");
+      })
+  }
 
   openSnackBar(massage: string, action: string): MatSnackBarRef<SimpleSnackBar> {
     return this.snackBar.open(massage, action, {
       duration: 2000
     });
+
+
   }
 
   displayedColumns: string[] = ['id', 'name', 'description', 'actions'];
