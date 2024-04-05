@@ -1,19 +1,7 @@
 runtime: python27
-api_version: 1
-threadsafe: true
 handlers:
   - url: /
     static_files: dist/FRONT-INVENTORY/index.html
     upload: dist/FRONT-INVENTORY/index.html
   - url: /
     static_dir: dist/FRONT-INVENTORY
-skip_files:
-  - e2e/
-  - node_modules/
-  - src/
-  - coverage
-  - ^(.*/)?\..*$
-  - ^(.*/)?.*\.json$
-  - ^(.*/)?.*\.md$
-  - ^(.*/)?.*\.yaml$
-  - ^LICENSE
