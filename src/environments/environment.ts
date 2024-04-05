@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   secure: false,
-  base_url: "http://localhost:8080/api/v1"
+  base_url: "http://proyectofullstack-418414.rj.r.appspot.com//api/v1"
 };
 
 /*
